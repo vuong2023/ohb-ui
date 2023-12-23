@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}}
+<style>
+  h1 {
+    text-align: center;
+    margin: 20px 0 50px 0;
+  }
+  .ant-btn,
+  .ant-input {
+    height: 50px;
+    border-radius: 30px;
+  }
+  .ant-input-group-addon {
+    border-radius: 0 30px 30px 0;
+    width: 50px;
+    font-size: 18px;
+  }
+  .ant-input-affix-wrapper .ant-input-prefix {
+    left: 23px;
+  }
+  .ant-input-affix-wrapper .ant-input:not(:first-child) {
+    padding-left: 50px;
+  }
+  .centered {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  #app {
+    overflow: hidden;
+  }
+  #login {
+    animation: charge 0.5s both;
+    background-color: #fff;
+    border-radius: 2rem;
+    padding: 3rem;
+    transition: all 0.3s;
+  }
+  #login:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+  }
+  @keyframes charge {
+    from {
+      transform: translateY(5rem);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .under {
+    background-color: #c7ebe2;
+    z-index: 0;
+  }
+  .dark .under {
+    background-color: #0f2d32;
+  }
+  .dark #login {
+    background-color: #151f31;
+  }
+  .dark h1 {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+  .ant-btn-primary-login {
+    width: 100%;
+  }
+  .ant-btn-primary-login:focus,
+  .ant-btn-primary-login:hover {
+    color: #fff;
+    background-color: #006655;
+    border-color: #006655;
+    background-image: linear-gradient(
+      270deg,
+      rgba(123, 199, 77, 0) 30%,
+      #009980,
+      rgba(123, 199, 77, 0) 100%
+    );
+    background-repeat: no-repeat;
+    animation: ma-bg-move ease-in-out 5s infinite;
+    background-position-x: -500px;
+    width: 95%;
+    animation-delay: -0.5s;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+  }
+  .ant-btn-primary-login.active,
+  .ant-btn-primary-login:active {
+    color: #fff;
+    background-color: #006655;
+    border-color: #006655;
+  }
+  @keyframes ma-bg-move {
+    0% {
+      background-position: -500px 0;
+    }
+    50% {
+      background-position: 1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+  .wave-btn-bg {
+    position: relative;
+    border-radius: 25px;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(.645,.045,.355,1);
+  }
+  .dark .wave-btn-bg {
+    color: #fff;
+    position: relative;
+    background-color: #0a7557;
+    border: 2px double transparent;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    background-size: 300%;
+    width: 100%;
+    z-index: 1;
+  }
+  .dark .wave-btn-bg:hover {animation: wave-btn-tara 4s ease infinite;}
+  .dark .wave-btn-bg-cl {
+    background-image: linear-gradient(rgba(13, 14, 33, 0), rgba(13, 14, 33, 0)),
+      radial-gradient(circle at left top, #006655, #009980, #006655) !important;
+    border-radius: 3em;
+  }
+  .dark .wave-btn-bg-cl:hover {
+    width: 95%;
+  }
+  .dark .wave-btn-bg-cl:before {
+    position: absolute;
+    content: "";
+    top: -5px;
+    left: -5px;
+    bottom: -5px;
+    right: -5px;
+    z-index: -1;
+    background: inherit;
+    background-size: inherit;
+    border-radius: 4em;
+    opacity: 0;
+    transition: 0.5s;
+  }
+  .dark .wave-btn-bg-cl:hover::before {
+    opacity: 1;
+    filter: blur(20px);
+    animation: wave-btn-tara 8s linear infinite;
+  }
+  @keyframes wave-btn-tara {
+    to {
+      background-position: 300%;
+    }
+  }
+  .dark .ant-btn-primary-login {
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    background-image: linear-gradient(
+      rgba(13, 14, 33, 0.45),
+      rgba(13, 14, 33, 0.35)
+    );
+    border-radius: 2rem;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    height: 46px;
+    position: relative;
+    white-space: nowrap;
+    cursor: pointer;
+    touch-action: manipulation;
+    padding: 0 15px;
+    width: 100%;
+    animation: none;
+    background-position-x: 0;
+    box-shadow: none;
+  }
+  .waves-header {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    background-color: #dbf5ed;
+    color: white;
+    z-index: -1;
+  }
+  .dark .waves-header {
+    background-color: #101828;
+  }
+  .waves-inner-header {
+    height: 50vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .waves {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    margin-bottom: -5px; /*Fix for safari gap*/
+    min-height: 100px;
+    max-height: 150px;
+  }
+  .parallax > use {
+    animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+  }
+  .dark .parallax > use {
+    fill: rgb(10 117 87 / 20%);
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+    opacity: 0.2;
+  }
+  .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+    opacity: 0.4;
+  }
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+    opacity: 0.6;
+  }
+  @keyframes move-forever {
+    0% {
+      transform: translate3d(-90px, 0, 0);
+    }
+    100% {
+      transform: translate3d(85px, 0, 0);
+    }
+  }
+  @media (max-width: 768px) {
+    .waves {
+      height: 40px;
+      min-height: 40px;
+    }
+  }
+</style>
+<body>
+<a-layout id="app" v-cloak :class="themeSwitcher.currentTheme">
+    <transition name="list" appear>
+        <a-layout-content class="under" style="min-height: 0;">
+            <div class="waves-header">
+                <div class="waves-inner-header"></div>
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0, 135, 113, 0.08)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(0, 135, 113, 0.08)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(0, 135, 113, 0.08)" />
+                    </g>
+                </svg>
+            </div>
+            <a-row type="flex" justify="center" align="middle" style="height: 100%; overflow: auto;">
+            <a-col :xs="22" :sm="20" :md="14" :lg="10" :xl="8" :xxl="6" id="login" style="margin: 3rem 0;">
+            <a-row type="flex" justify="center">
+                <a-col>
+                    <h1 class="title">{{ i18n "pages.login.title" }}</h1>
+                </a-col>
+            </a-row>
+            <a-row type="flex" justify="center">
+                <a-col span="24">
+                    <a-form>
+                        <a-form-item>
+                            <a-input v-model.trim="user.username" placeholder='{{ i18n "username" }}'
+                                     @keydown.enter.native="login" autofocus>
+                                <a-icon slot="prefix" type="user" style="font-size: 16px;"/>
+                            </a-input>
+                        </a-form-item>
+                        <a-form-item>
+                            <password-input icon="lock" v-model.trim="user.password"
+                                            placeholder='{{ i18n "password" }}' @keydown.enter.native="login">
+                            </password-input>
+                        </a-form-item>
+                        <a-form-item v-if="secretEnable">
+                            <password-input icon="key" v-model.trim="user.loginSecret"
+                                            placeholder='{{ i18n "secretToken" }}' @keydown.enter.native="login">
+                            </password-input>
+                        </a-input>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-row justify="center" class="centered">
+                                <div class="wave-btn-bg wave-btn-bg-cl" :style="loading ? { width: '54px' } : { display: 'inline-block' }">
+                                    <a-button class="ant-btn-primary-login" type="primary" :loading="loading" @click="login" :icon="loading ? 'poweroff' : undefined">
+                                        [[ loading ? '' : '{{ i18n "login" }}' ]]
+                                    </a-button>
+                                </div>
+                            </a-row>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-row justify="center" class="centered">
+                                <a-col :span="24">
+                                    <a-select ref="selectLang" v-model="lang" @change="setLang(lang)" style="width: 150px;" :dropdown-class-name="themeSwitcher.currentTheme">
+                                        <a-select-option :value="l.value" label="English" v-for="l in supportLangs">
+                                            <span role="img" aria-label="l.name" v-text="l.icon"></span>
+                                            &nbsp;&nbsp;<span v-text="l.name"></span>
+                                        </a-select-option>
+                                    </a-select>
+                                </a-col>
+                            </a-row>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-row justify="center" class="centered">
+                                <a-col>
+                                    <a-icon type="bulb" :theme="themeSwitcher.isDarkTheme ? 'filled' : 'outlined'"></a-icon>&nbsp;
+                                </a-col>
+                                <a-col>
+                                    <theme-switch />
+                                </a-col>
+                            </a-row>
+                        </a-form-item>
+                    </a-form>
+                </a-col>
+            </a-row>
+            </a-col>
+            </a-row>
+        </a-layout-content>
+    </transition>
+</a-layout>
+{{template "js" .}}
+{{template "component/themeSwitcher" .}}
+{{template "component/password" .}}
+<script>
+    class User {
+        constructor() {
+            this.username = "";
+            this.password = "";
+        }
+    }
+
+    const app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#app',
+        data: {
+            themeSwitcher,
+            loading: false,
+            user: new User(),
+            secretEnable: false,
+            lang: ""
+        },
+        async created() {
+            this.lang = getLang();
+            this.secretEnable = await this.getSecretStatus();
+        },
+        methods: {
+            async login() {
+                this.loading = true;
+                const msg = await HttpUtil.post('/login', this.user);
+                this.loading = false;
+                if (msg.success) {
+                    location.href = basePath + 'panel/';
+                }
+            },
+            async getSecretStatus() {
+                this.loading = true;
+                const msg = await HttpUtil.post('/getSecretStatus');
+                this.loading = false;
+                if (msg.success) {
+                    this.secretEnable = msg.obj;
+                    return msg.obj;
+                }
+            },
+        },
+    });
+</script>
+</body>
+</html>
