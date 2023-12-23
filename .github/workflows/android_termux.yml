@@ -85,7 +85,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: "KTM-xui Android (Termux)"
+          name: "OHB-xui Android (Termux)"
           tag_name: ${{ steps.tag.outputs.release_tag }}
           files: |
             ${{ env.FIRMWARE }}/x-ui-android-arm64.tar.gz
