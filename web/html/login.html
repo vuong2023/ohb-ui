@@ -6,6 +6,15 @@
     text-align: center;
     margin: 20px 0 50px 0;
   }
+  h2 {
+    text-align: center;
+    margin: 20px 0 50px 0;
+    font-size: 80px;
+    -webkit-background-clip: text; /* Cho phép sử dụng chữ làm mask */
+    -webkit-text-fill-color: transparent; /* Ẩn màu chữ */
+    background-image:
+      linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); /* 7 màu gradient */
+  }
   .ant-btn,
   .ant-input {
     height: 50px;
@@ -265,8 +274,8 @@
             <a-col :xs="22" :sm="20" :md="14" :lg="10" :xl="8" :xxl="6" id="login" style="margin: 3rem 0;">
             <a-row type="flex" justify="center">
                 <a-col>
+                    <h2 class="title">{{ i18n "pages.login.ohbtitle" }}</h2>
                     <h1 class="title">{{ i18n "pages.login.title" }}</h1>
-                    <h2 class="title">{{ i18n "pages.login.subtitle" }}</h2>
                 </a-col>
             </a-row>
             <a-row type="flex" justify="center">
