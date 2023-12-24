@@ -27,7 +27,31 @@
                          'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
                          'Segoe UI Emoji', 'Segoe UI Symbol';
         }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f2f2f2;
+        }
+
+        .rainbow-text-container {
+            background-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 20px;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
     </style>
     <title>{{ .host }}-{{ i18n .title}}</title>
 </head>
+<body>
+    <div class="center-container">
+        <div class="rainbow-text-container">
+            <h1 class="rainbow-text">OHB</h1>
+        </div>
+    </div>
+</body>
 {{end}}
