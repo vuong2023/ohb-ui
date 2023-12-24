@@ -174,7 +174,7 @@
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.ChinaDomain"}}' desc='{{ i18n "pages.xray.ChinaDomainDesc"}}' v-model="ChinaDomainSettings"></setting-list-item>
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.RussiaIp"}}' desc='{{ i18n "pages.xray.RussiaIpDesc"}}' v-model="RussiaIpSettings"></setting-list-item>
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.RussiaDomain"}}' desc='{{ i18n "pages.xray.RussiaDomainDesc"}}' v-model="RussiaDomainSettings"></setting-list-item>
-				                    <setting-list-item type="switch" title='{{ i18n "pages.xray.VNIp"}}' desc='{{ i18n "pages.xray.VNIpDesc"}}' v-model="VNIpSettings"></setting-list-item>
+				    <setting-list-item type="switch" title='{{ i18n "pages.xray.VNIp"}}' desc='{{ i18n "pages.xray.VNIpDesc"}}' v-model="VNIpSettings"></setting-list-item>
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.VNDomain"}}' desc='{{ i18n "pages.xray.VNDomainDesc"}}' v-model="VNDomainSettings"></setting-list-item>
                                 </a-collapse-panel>
                                 <a-collapse-panel header='{{ i18n "pages.xray.directCountryConfigs"}}'>
@@ -220,7 +220,7 @@
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.OpenAIWARP"}}' desc='{{ i18n "pages.xray.OpenAIWARPDesc"}}' v-model="OpenAIWARPSettings"></setting-list-item>
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.NetflixWARP"}}' desc='{{ i18n "pages.xray.NetflixWARPDesc"}}' v-model="NetflixWARPSettings"></setting-list-item>
                                     <setting-list-item type="switch" title='{{ i18n "pages.xray.SpotifyWARP"}}' desc='{{ i18n "pages.xray.SpotifyWARPDesc"}}' v-model="SpotifyWARPSettings"></setting-list-item>
-									<setting-list-item type="switch" title='{{ i18n "pages.xray.VNWARP"}}' desc='{{ i18n "pages.xray.VNWARPDesc"}}' v-model="VNWARPSettings"></setting-list-item>
+				    <setting-list-item type="switch" title='{{ i18n "pages.xray.VNWARP"}}' desc='{{ i18n "pages.xray.VNWARPDesc"}}' v-model="VNWARPSettings"></setting-list-item>
                                 </a-collapse-panel>
                             </a-collapse>
                         </a-tab-pane>
@@ -538,7 +538,7 @@
                     cn: ["geoip:cn"],
                     ir: ["ext:geoip_IR.dat:ir"],
                     ru: ["geoip:ru"],
-		            vn: ["ext:geoip_VN.dat:vn"],
+		    vn: ["ext:geoip_VN.dat:vn"],
                 },
                 domains: {
                     ads: [
@@ -565,7 +565,7 @@
                         "ext:geosite_IR.dat:ir"  // have rules to bypass all .ir domains.
                     ],
 		            vn: [
-			            "regexp:.*\\.vn$",
+			"regexp:.*\\.vn$",
                         "ext:geosite_VN.dat:vn",
                         "ext:geosite_VN.dat:ads"
 		    ]
@@ -1307,7 +1307,7 @@
                     }
                 }
             },
-	        VNIpSettings: {
+	    VNIpSettings: {
                 get: function () {
                     return doAllItemsExist(this.settingsData.ips.vn, this.blockedIPs);
                 },
@@ -1403,7 +1403,7 @@
                     }
                 }
             },
-	        VNIpDirectSettings: {
+	    VNIpDirectSettings: {
                 get: function () {
                     return doAllItemsExist(this.settingsData.ips.vn, this.directIPs);
                 },
@@ -1475,7 +1475,7 @@
                     }
                 },
             },
-			VNWARPSettings: {
+	    VNWARPSettings: {
                 get: function () {
                     return doAllItemsExist(this.settingsData.domains.vn, this.warpDomains);
                 },
