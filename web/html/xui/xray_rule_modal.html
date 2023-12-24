@@ -3,7 +3,7 @@
          :confirm-loading="ruleModal.confirmLoading" :closable="true" :mask-closable="false"
          :ok-text="ruleModal.okText" cancel-text='{{ i18n "close" }}' :class="themeSwitcher.currentTheme">
     <a-form :colon="false" :label-col="{ md: {span:6} }" :wrapper-col="{ md: {span:14} }">
-        <a-form-item label='Domain Matcher'>
+        <a-form-item label='Công cụ so khớp tên miền'>
                     <a-select v-model="ruleModal.rule.domainMatcher" :dropdown-class-name="themeSwitcher.currentTheme">
                         <a-select-option v-for="dm in ['','hybrid','linear']" :value="dm">[[ dm ]]</a-select-option>
                     </a-select>
