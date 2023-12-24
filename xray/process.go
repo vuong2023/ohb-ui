@@ -38,15 +38,15 @@ func GetGeoipPath() string {
 }
 
 func GetIPLimitLogPath() string {
-	return config.GetLogFolder() + "/3xipl.log"
+	return config.GetLogFolder() + "/ohb.log"
 }
 
 func GetIPLimitBannedLogPath() string {
-	return config.GetLogFolder() + "/3xipl-banned.log"
+	return config.GetLogFolder() + "/ohb-banned.log"
 }
 
 func GetAccessPersistentLogPath() string {
-	return config.GetLogFolder() + "/3xipl-access-persistent.log"
+	return config.GetLogFolder() + "/ohb-access-persistent.log"
 }
 
 func GetAccessLogPath() string {
