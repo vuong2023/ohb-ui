@@ -42,7 +42,7 @@ func (a *IndexController) index(c *gin.Context) {
 		c.Redirect(http.StatusTemporaryRedirect, "panel/")
 		return
 	}
-	html(c, "login.html", "OHB", nil)
+	html(c, "login.html", "pages.login.ohbtitle", nil)
 }
 
 func (a *IndexController) login(c *gin.Context) {
