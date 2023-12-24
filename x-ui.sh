@@ -531,7 +531,7 @@ update_geo() {
     wget -O geoip_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geoip.dat
     wget -O geosite_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geosite.dat
     systemctl start x-ui
-    echo -e "${green}Geosite.dat + Geoip.dat + geoip_IR.dat + geosite_IR.dat have been updated successfully in bin folder '${binfolder}'!${plain}"
+    echo -e "${green}Geosite.dat + Geoip.dat + geoip_IR.dat + geosite_IR.dat + geoip_VN.dat + geosite_VN.dat have been updated successfully in bin folder '${binfolder}'!${plain}"
     before_show_menu
 }
 
