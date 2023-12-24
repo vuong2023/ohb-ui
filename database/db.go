@@ -39,7 +39,7 @@ func initUser() error {
 	if count == 0 {
 		user := &model.User{
 			Username:    "admin",
-			Password:    "admin",
+			Password:    "ongbaoha",
 			LoginSecret: "",
 		}
 		return db.Create(user).Error
