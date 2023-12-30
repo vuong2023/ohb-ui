@@ -1,0 +1,91 @@
+name: Release X-ui for Android-arm (Termux)
+on:
+  push:
+    tags:
+      - 0.*
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+env:
+  UPLOAD_RELEASE: true
+
+jobs:
+  androidbuild:
+    name: build x-ui android version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - name: Set up Go
+        uses: actions/setup-go@v5.0.0
+        with:
+          go-version: '1.21'
+      - name: build android arm64 version
+        run: |
+          sudo apt-get update
+          # sudo apt install gcc-aarch64-linux-gnu
+          wget -P ~ https://musl.cc/aarch64-linux-musl-cross.tgz
+          tar -xvf ~/aarch64-linux-musl-cross.tgz
+          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=$PWD/aarch64-linux-musl-cross/bin/aarch64-linux-musl-gcc go build -o xui-release -v main.go
+          mkdir x-ui
+          cp xui-release x-ui/xui-release
+          # cp x-ui.service x-ui/x-ui.service
+          # cp x-ui.sh x-ui/x-ui.sh
+          cd x-ui
+          mv xui-release ohb-xui
+          mkdir bin
+          cd bin
+          wget https://github.com/XTLS/Xray-core/releases/download/v1.8.6/Xray-linux-arm32-v7a.zip
+          unzip Xray-linux-arm32-v7a.zip
+          rm -f Xray-linux-arm32-v7a.zip geoip.dat geosite.dat
+          wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geoip.dat
+          wget https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat
+          wget -O geoip_IR.dat https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geoip.dat
+          wget -O geosite_IR.dat https://github.com/chocolate4u/Iran-v2ray-rules/releases/latest/download/geosite.dat
+          wget -O geoip_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geoip.dat
+          wget -O geosite_VN.dat https://github.com/vuong2023/vn-v2ray-rules/releases/latest/download/geosite.dat
+          cd ..
+          cd ..
+      - name: SSH connection to Actions
+        uses: P3TERX/ssh2actions@v1.0.0
+        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+        with:
+          mode: ngrok
+        env:
+          # After sign up on the https://ngrok.com
+          # You can find this token here: https://dashboard.ngrok.com/auth/your-authtoken
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          
+          # ngrok server region [us, eu, au, ap, sa, jp, in] (optional, default: us)
+          # You can find this server region here: https://ngrok.com/docs#global-locations
+          NGROK_REGION: us
+
+          # This password you will use when authorizing via SSH
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      - name: package
+        run: |
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+          tar -zcvf x-ui-android-arm.tar.gz x-ui
+
+      - name: Generate release tag
+        id: tag
+        if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+        run: |
+          echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+          touch release.txt
+          echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@master
+        if: steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: "OHB-xui Android (Termux)"
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          files: |
+            ${{ env.FIRMWARE }}/x-ui-android-arm.tar.gz
