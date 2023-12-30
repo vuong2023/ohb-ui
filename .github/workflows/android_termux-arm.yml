@@ -22,13 +22,13 @@ jobs:
         uses: actions/setup-go@v5.0.0
         with:
           go-version: '1.21'
-      - name: build android arm64 version
+      - name: build android arm version
         run: |
           sudo apt-get update
-          # sudo apt install gcc-aarch64-linux-gnu
-          wget -P ~ https://musl.cc/aarch64-linux-musl-cross.tgz
-          tar -xvf ~/aarch64-linux-musl-cross.tgz
-          CGO_ENABLED=1 GOOS=linux GOARCH=arm64 CC=$PWD/aarch64-linux-musl-cross/bin/aarch64-linux-musl-gcc go build -o xui-release -v main.go
+          # sudo apt install gcc-arm-linux-gnu
+          wget -P ~ https://musl.cc/armv7l-linux-musleabihf-cross.tgz
+          tar -xvf ~/armv7l-linux-musleabihf-cross.tgz
+          CGO_ENABLED=1 GOOS=linux GOARCH=arm CC=$PWD/armv7l-linux-musleabihf-cross/bin/armv7l-linux-musleabihf-gcc go build -o xui-release -v main.go
           mkdir x-ui
           cp xui-release x-ui/xui-release
           # cp x-ui.service x-ui/x-ui.service
